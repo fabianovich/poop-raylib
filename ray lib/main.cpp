@@ -11,8 +11,16 @@ int main(void)
 
     Font comicFont = LoadFont("resources/comic.ttf");
 
-    Model poop = LoadModel("resources/poop.glb"); // load model
-    Texture2D texture = LoadTexture("resources/poop.jpg"); // load model texture
+    Ray ray = { 0 };
+
+    // Load model and texture
+    Model poop = LoadModel("resources/poop.glb"); // Load model
+    //Texture2D poopTexture = LoadTexture("resources/shrek.jpg"); // Load model texture
+
+    //// Set the model's material texture
+    //poop.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = poopTexture;
+
+
 
     Vector3 poopPos = { 0.0f, 0.0f, 0.0f };
 
@@ -37,6 +45,11 @@ int main(void)
     camera.projection = CAMERA_PERSPECTIVE;             
 
     Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
+    bool drawPoop = false;
+
+    // lighting (apparently...)
+    Vector3 lightPosition = { 5.0f, 5.0f, 5.0f };
+    Color lightColor = WHITE;
 
     SetTargetFPS(60);
 
@@ -48,7 +61,6 @@ int main(void)
 
         BeginMode3D(camera);
 
-        DrawModel(poop, poopPos, 1.0f, WHITE);
         
         float offsetThisFrame = 15.0f * GetFrameTime();
 
@@ -78,17 +90,33 @@ int main(void)
             camera.target.z = cubePosition.z;
             camera.position.z += offsetThisFrame;
         }
-        if (IsKeyDown(KEY_SPACE))
+        if (IsKeyDown(KEY_SPACE) && cubePosition.y < 16)
         {
             cubePosition.y += offsetThisFrame;
             camera.target.y = cubePosition.y;
             camera.position.y += offsetThisFrame;
         }
-        if (IsKeyDown(KEY_D))
+        if (IsKeyDown(KEY_D) && cubePosition.y > -1)
         {
             cubePosition.y -= offsetThisFrame;
             camera.target.y = cubePosition.y;
             camera.position.y -= offsetThisFrame;
+        }
+        if (IsKeyPressed(KEY_P))
+        {
+            poopPos = camera.target;
+            poopPos.y -= 1.0f;
+            drawPoop = true;
+            
+        }
+        if (drawPoop == true)
+        {
+            DrawModel(poop, poopPos, 1.0f, DARKBROWN);
+            
+            if (poopPos.y > 2) {
+                poopPos.y -= offsetThisFrame;
+            }
+           
         }
 
 
@@ -100,6 +128,7 @@ int main(void)
         DrawGrid(100, 1.0f);
 
         EndMode3D();
+
         
         
         DrawTextEx(comicFont, poopText, poopTextPosition, fontSize, spacing, tint);
@@ -110,6 +139,7 @@ int main(void)
     }
 
     UnloadFont(comicFont);
+    //UnloadTexture(poopTexture);
     CloseWindow();
 
     return 0;

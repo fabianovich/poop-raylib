@@ -1,5 +1,4 @@
 ﻿#include "raylib.h"
-#include "rlgl.h"
 
 int main(void)
 {
@@ -20,14 +19,14 @@ int main(void)
     Vector2 position = { poopWidth, poopHeight };
     float fontSize = 200.0f;
     float spacing = 2.0f;
-    Color tint = DARKGRAY;
+    Color tint = GREEN;
 
     Camera3D camera = { 0 };
-    camera.position = { 0.0f, 10.0f, 10.0f };  // Camera position
-    camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
-    camera.up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    camera.fovy = 45.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
+    camera.position = { 0.0f, 10.0f, 10.0f };
+    camera.target = { 0.0f, 0.0f, 0.0f };      
+    camera.up = { 0.0f, 1.0f, 0.0f };          
+    camera.fovy = 45.0f;                                
+    camera.projection = CAMERA_PERSPECTIVE;             
 
     Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
 
@@ -37,11 +36,11 @@ int main(void)
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
         BeginMode3D(camera);
         
-        float offsetThisFrame = 20.0f * GetFrameTime();
+        float offsetThisFrame = 15.0f * GetFrameTime();
 
         if (IsKeyDown(KEY_RIGHT))
         {
@@ -49,38 +48,52 @@ int main(void)
             camera.target.x = cubePosition.x;
             camera.position.x = cubePosition.x;
         }
-        else if (IsKeyDown(KEY_LEFT))
+        if (IsKeyDown(KEY_LEFT))
         {
             cubePosition.x -= offsetThisFrame;
             camera.target.x = cubePosition.x;
             camera.position.x = cubePosition.x;
 
         }
-        else if (IsKeyDown(KEY_UP))
+        if (IsKeyDown(KEY_UP))
         {
             cubePosition.z -= offsetThisFrame;
             camera.target.z = cubePosition.z;
             camera.position.z -= offsetThisFrame;
 
         }
-        else if (IsKeyDown(KEY_DOWN))
+        if (IsKeyDown(KEY_DOWN))
         {
             cubePosition.z += offsetThisFrame;
             camera.target.z = cubePosition.z;
             camera.position.z += offsetThisFrame;
-
-
         }
+        if (IsKeyDown(KEY_SPACE))
+        {
+            cubePosition.y += offsetThisFrame;
+            camera.target.y = cubePosition.y;
+            camera.position.y += offsetThisFrame;
+        }
+        if (IsKeyDown(KEY_N))
+        {
+            cubePosition.y -= offsetThisFrame;
+            camera.target.y = cubePosition.y;
+            camera.position.y -= offsetThisFrame;
+        }
+
 
         DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, BROWN);
         DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, BLACK);
 
+        DrawFPS(10, 10);
+
         DrawGrid(100, 1.0f);
 
         EndMode3D();
-
+        
+        
         DrawTextEx(comicFont, message, position, fontSize, spacing, tint);
-        DrawFPS(10, 10);
+        
 
         EndDrawing();
     }

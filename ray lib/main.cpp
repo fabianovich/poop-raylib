@@ -1,4 +1,4 @@
-#include "raylib.h"
+﻿#include "raylib.h"
 
 int main(void)
 {
@@ -15,6 +15,15 @@ int main(void)
     float spacing = 2.0f;
     Color tint = DARKGRAY;
 
+    Camera3D camera = { 0 };
+    camera.position = { 0.0f, 10.0f, 10.0f };  // Camera position
+    camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
+    camera.up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
+
+    Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
+
     SetTargetFPS(60);
 
     while (!WindowShouldClose())
@@ -22,7 +31,17 @@ int main(void)
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        BeginMode3D(camera);
+
+        DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, BROWN);
+        DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, BLACK);
+
+        DrawGrid(10, 1.0f);
+
+        EndMode3D();
+
         DrawTextEx(comicFont, message, position, fontSize, spacing, tint);
+        DrawFPS(10, 10);
 
         EndDrawing();
     }

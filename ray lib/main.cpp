@@ -1,4 +1,5 @@
 ﻿#include "raylib.h"
+#include "raymath.h"
 
 int main(void)
 {
@@ -10,13 +11,20 @@ int main(void)
 
     Font comicFont = LoadFont("resources/comic.ttf");
 
+    Model poop = LoadModel("resources/poop.glb"); // load model
+    Texture2D texture = LoadTexture("resources/poop.jpg"); // load model texture
+
+    Vector3 poopPos = { 0.0f, 0.0f, 0.0f };
 
     const int poopWidth = (screenWidth / 2) - 175;
     const int poopHeight = (screenHeight / 2) - 125;
 
 
-    const char* message = "poop";
-    Vector2 position = { poopWidth, poopHeight };
+    const char* poopText = "poop";
+    const char* pToPoop = "PRESS P TO POOP";
+
+    Vector2 poopTextPosition = { poopWidth, poopHeight };
+    Vector2 pToPoopPosition = { 75, 75 };
     float fontSize = 200.0f;
     float spacing = 2.0f;
     Color tint = GREEN;
@@ -36,9 +44,11 @@ int main(void)
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(WHITE);
 
         BeginMode3D(camera);
+
+        DrawModel(poop, poopPos, 1.0f, WHITE);
         
         float offsetThisFrame = 15.0f * GetFrameTime();
 
@@ -74,7 +84,7 @@ int main(void)
             camera.target.y = cubePosition.y;
             camera.position.y += offsetThisFrame;
         }
-        if (IsKeyDown(KEY_N))
+        if (IsKeyDown(KEY_D))
         {
             cubePosition.y -= offsetThisFrame;
             camera.target.y = cubePosition.y;
@@ -92,7 +102,8 @@ int main(void)
         EndMode3D();
         
         
-        DrawTextEx(comicFont, message, position, fontSize, spacing, tint);
+        DrawTextEx(comicFont, poopText, poopTextPosition, fontSize, spacing, tint);
+        DrawText(pToPoop, 75, 75, 30, BLACK);
         
 
         EndDrawing();

@@ -1,4 +1,5 @@
 ﻿#include "raylib.h"
+#include "rlgl.h"
 
 int main(void)
 {
@@ -45,24 +46,36 @@ int main(void)
         if (IsKeyDown(KEY_RIGHT))
         {
             cubePosition.x += offsetThisFrame;
+            camera.target.x = cubePosition.x;
+            camera.position.x = cubePosition.x;
         }
         else if (IsKeyDown(KEY_LEFT))
         {
             cubePosition.x -= offsetThisFrame;
+            camera.target.x = cubePosition.x;
+            camera.position.x = cubePosition.x;
+
         }
         else if (IsKeyDown(KEY_UP))
         {
             cubePosition.z -= offsetThisFrame;
+            camera.target.z = cubePosition.z;
+            camera.position.z -= offsetThisFrame;
+
         }
         else if (IsKeyDown(KEY_DOWN))
         {
             cubePosition.z += offsetThisFrame;
+            camera.target.z = cubePosition.z;
+            camera.position.z += offsetThisFrame;
+
+
         }
 
         DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, BROWN);
         DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, BLACK);
 
-        DrawGrid(10, 1.0f);
+        DrawGrid(100, 1.0f);
 
         EndMode3D();
 

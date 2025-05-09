@@ -43,9 +43,9 @@ int main(void)
     camera.fovy = 45.0f;                                
     camera.projection = CAMERA_PERSPECTIVE;             
 
-    Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
+    Vector3 cubePosition = { 0.0f, 1.0f, 0.0f };
     bool drawPoop = false;
-    int poopAmount = 0;
+    int poopAmount = 1;
 
     // lighting (apparently...)
     Vector3 lightPosition = { 5.0f, 5.0f, 5.0f };
@@ -62,25 +62,25 @@ int main(void)
         
         float offsetThisFrame = 15.0f * GetFrameTime();
 
-        if (IsKeyDown(KEY_RIGHT))
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
         {
             cubePosition.x += offsetThisFrame;
             camera.target.x = cubePosition.x;
             camera.position.x = cubePosition.x;
         }
-        if (IsKeyDown(KEY_LEFT))
+        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_Q) || IsKeyDown(KEY_A))
         {
             cubePosition.x -= offsetThisFrame;
             camera.target.x = cubePosition.x;
             camera.position.x = cubePosition.x;
         }
-        if (IsKeyDown(KEY_UP))
+        if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_Z) || IsKeyDown(KEY_W))
         {
             cubePosition.z -= offsetThisFrame;
             camera.target.z = cubePosition.z;
             camera.position.z -= offsetThisFrame;
         }
-        if (IsKeyDown(KEY_DOWN))
+        if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
         {
             cubePosition.z += offsetThisFrame;
             camera.target.z = cubePosition.z;
@@ -92,7 +92,7 @@ int main(void)
             camera.target.y = cubePosition.y;
             camera.position.y += offsetThisFrame;
         }
-        if (IsKeyDown(KEY_D) && cubePosition.y > -1)
+        if (IsKeyDown(KEY_N) && cubePosition.y > 1.0f)
         {
             cubePosition.y -= offsetThisFrame;
             camera.target.y = cubePosition.y;
@@ -103,22 +103,16 @@ int main(void)
             poopPos = camera.target;
             poopPos.y -= 1.0f;
             drawPoop = true;
-            poopAmount++;   
         }
         if (drawPoop == true)
         {
             for (int i = 0; i < poopAmount; i++) {
                 DrawModel(poop, poopPos, 1.0f, DARKBROWN);
-
                 if (poopPos.y > 2) {
                     poopPos.y -= offsetThisFrame;
                 }
             }
-
-            
-           
         }
-
 
         DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, BROWN);
         DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, BLACK);

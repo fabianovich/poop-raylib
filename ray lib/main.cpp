@@ -4,6 +4,9 @@
 
 using namespace std;
 
+const int MAX_ENTITIES = 69;
+const float GRAVITY = 0.5f;
+
 int main(void)
 {
     const int screenWidth = 1920;
@@ -22,6 +25,10 @@ int main(void)
     //texture
     poop.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = poopTexture;
 
+    Vector3 positions[MAX_ENTITIES];
+    bool isActive[MAX_ENTITIES] = { false };
+    int entityCount = 0;
+
     Vector3 poopPos = { 0.0f, 0.0f, 0.0f };
 
     const int poopWidth = (screenWidth / 2) - 175;
@@ -37,13 +44,13 @@ int main(void)
     Color tint = GREEN;
 
     Camera3D camera = { 0 };
-    camera.position = { 0.0f, 10.0f, 10.0f };
-    camera.target = { 0.0f, 0.0f, 0.0f };      
+    camera.position = { 0.0f, 30, 10.0f };
+    camera.target = { 0.0f, 20, 0.0f };      
     camera.up = { 0.0f, 1.0f, 0.0f };          
     camera.fovy = 45.0f;                                
     camera.projection = CAMERA_PERSPECTIVE;             
 
-    Vector3 cubePosition = { 0.0f, 1.0f, 0.0f };
+    Vector3 cubePosition = { 0.0f, 20, 0.0f };
     bool drawPoop = false;
     int poopAmount = 1;
 
@@ -55,6 +62,23 @@ int main(void)
 
     while (!WindowShouldClose())
     {
+        if (IsKeyPressed(KEY_P) && entityCount < MAX_ENTITIES) {
+            positions[entityCount] = cubePosition;
+            positions[entityCount].y -= 1.0f;
+            isActive[entityCount] = true;
+            entityCount++;
+        }
+
+        //gravity
+        for (int i = 0; i < entityCount; i++) {
+            if (isActive[i]) {
+                positions[i].y -= GRAVITY;
+                if (positions[i].y < 1.0f) {
+                    positions[i].y = 1.0f;
+                }
+            }
+        }
+
         BeginDrawing();
         ClearBackground(WHITE);
 
@@ -86,31 +110,17 @@ int main(void)
             camera.target.z = cubePosition.z;
             camera.position.z += offsetThisFrame;
         }
-        if (IsKeyDown(KEY_SPACE) && cubePosition.y < 16)
-        {
-            cubePosition.y += offsetThisFrame;
-            camera.target.y = cubePosition.y;
-            camera.position.y += offsetThisFrame;
-        }
-        if (IsKeyDown(KEY_N) && cubePosition.y > 1.0f)
-        {
-            cubePosition.y -= offsetThisFrame;
-            camera.target.y = cubePosition.y;
-            camera.position.y -= offsetThisFrame;
-        }
-        if (IsKeyPressed(KEY_P))
-        {
-            poopPos = camera.target;
-            poopPos.y -= 1.0f;
-            drawPoop = true;
-        }
+        
         if (drawPoop == true)
         {
-            for (int i = 0; i < poopAmount; i++) {
-                DrawModel(poop, poopPos, 1.0f, DARKBROWN);
-                if (poopPos.y > 2) {
-                    poopPos.y -= offsetThisFrame;
-                }
+            for (int i = 0; i < MAX_ENTITIES; i++) {
+                DrawModel(poop, positions[i], 1.0f, WHITE);
+            }
+        }
+        
+        for (int i = 0; i < entityCount; i++) {
+            if (isActive[i]) {
+                DrawModel(poop, positions[i], 1.0f, WHITE);
             }
         }
 
@@ -119,7 +129,7 @@ int main(void)
 
         DrawFPS(10, 10);
 
-        DrawGrid(100, 1.0f);
+        DrawGrid(10000, 1.0f);
 
         EndMode3D();
         

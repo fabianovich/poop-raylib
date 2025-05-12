@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int MAX_ENTITIES = 69;
+const int MAX_ENTITIES = 420;
 const float GRAVITY = 0.5f;
 
 int main(void)
@@ -19,7 +19,7 @@ int main(void)
 
     Ray ray = { 0 };
 
-    Model poop = LoadModel("resources/puup.glb"); // load model
+    Model poop = LoadModel("resources/poop.glb"); // load model
     //Model poop = LoadModelFromMesh(GenMeshCube(1.0f, 1.0f, 1.0f)); //temp cube for model cuz poop  doesnt work with the texture
 
 
@@ -47,13 +47,13 @@ int main(void)
     Color tint = GREEN;
 
     Camera3D camera = { 0 };
-    camera.position = { 0.0f, 30, 10.0f };
-    camera.target = { 0.0f, 20, 0.0f };      
+    camera.position = { 0.0f, 30.0f, 10.0f };
+    camera.target = { 0.0f, 10, 0.0f };      
     camera.up = { 0.0f, 1.0f, 0.0f };          
-    camera.fovy = 45.0f;                                
+    camera.fovy = 50.0f;                                
     camera.projection = CAMERA_PERSPECTIVE;             
 
-    Vector3 cubePosition = { 0.0f, 20, 0.0f };
+    Vector3 cubePosition = { 0.0f, 10, 0.0f };
     bool drawPoop = false;
     int poopAmount = 1;
 
@@ -123,7 +123,7 @@ int main(void)
         
         for (int i = 0; i < entityCount; i++) {
             if (isActive[i]) {
-                DrawModel(poop, positions[i], 1.0f, WHITE);
+                DrawModel(poop, positions[i], 2.0f, WHITE);
             }
         }
 

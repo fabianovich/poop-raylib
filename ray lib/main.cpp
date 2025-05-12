@@ -19,11 +19,14 @@ int main(void)
 
     Ray ray = { 0 };
 
-    Model poop = LoadModel("resources/poop.glb"); // load model
-    Texture2D poopTexture = LoadTexture("resources/shrek.jpg"); // load texture
+    Model poop = LoadModel("resources/puup.glb"); // load model
+    //Model poop = LoadModelFromMesh(GenMeshCube(1.0f, 1.0f, 1.0f)); //temp cube for model cuz poop  doesnt work with the texture
+
+
+    //Texture2D poopTexture = LoadTexture("resources/poop.png"); // load texture
 
     //texture
-    poop.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = poopTexture;
+    //poop.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = poopTexture;
 
     Vector3 positions[MAX_ENTITIES];
     bool isActive[MAX_ENTITIES] = { false };
@@ -140,7 +143,7 @@ int main(void)
     }
 
     UnloadFont(comicFont);
-    UnloadTexture(poopTexture);
+    //UnloadTexture(poopTexture);
     CloseWindow();
 
     return 0;

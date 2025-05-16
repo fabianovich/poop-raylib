@@ -1,6 +1,5 @@
 ﻿#include "raylib.h"
 #include "raymath.h"
-#include <string>
 
 const int MAX_ENTITIES = 420;
 const float GRAVITY = 0.5f;
@@ -16,14 +15,7 @@ int main(void)
 
     Ray ray = { 0 };
 
-    Model poop = LoadModel("resources/og_poop.glb"); // load model
-    //Model poop = LoadModelFromMesh(GenMeshCube(1.0f, 1.0f, 1.0f)); //temp cube for model cuz poop  doesnt work with the texture
-
-
-    Texture2D poopTexture = LoadTexture("resources/poop.png"); // load texture
-
-    //texture
-    poop.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = poopTexture;
+    Model poop = LoadModel("resources/og_poop.glb");
 
     Vector3 positions[MAX_ENTITIES];
     bool isActive[MAX_ENTITIES] = { false };
@@ -53,10 +45,6 @@ int main(void)
     Vector3 cubePosition = { 0.0f, 10, 0.0f };
     bool drawPoop = false;
     int poopAmount = 1;
-
-    // lighting (apparently...)
-    Vector3 lightPosition = { 5.0f, 5.0f, 5.0f };
-    Color lightColor = WHITE;
 
     SetTargetFPS(60);
 
@@ -129,20 +117,17 @@ int main(void)
         DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, BROWN);
         DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, BLACK);
 
-        DrawFPS(10, 10);
-
         DrawGrid(10000, 1.0f);
 
         EndMode3D();
         
         DrawTextEx(comicFont, poopText, poopTextPosition, fontSize, spacing, tint);
-        DrawText(pToPoop, 75, 75, 30, BLACK);
+        DrawTextEx(comicFont, pToPoop, pToPoopPosition, 60, spacing, BLACK);
 
         EndDrawing();
     }
 
     UnloadFont(comicFont);
-    UnloadTexture(poopTexture);
     CloseWindow();
 
     return 0;

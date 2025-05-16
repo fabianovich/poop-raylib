@@ -1,7 +1,7 @@
 ﻿#include "raylib.h"
 #include "raymath.h"
 #include <string>
-
+//#include <iostream>
 using namespace std;
 
 const int MAX_ENTITIES = 420;
@@ -19,14 +19,14 @@ int main(void)
 
     Ray ray = { 0 };
 
-    Model poop = LoadModel("resources/poop.glb"); // load model
+    Model poop = LoadModel("resources/og_poop.glb"); // load model
     //Model poop = LoadModelFromMesh(GenMeshCube(1.0f, 1.0f, 1.0f)); //temp cube for model cuz poop  doesnt work with the texture
 
 
-    //Texture2D poopTexture = LoadTexture("resources/poop.png"); // load texture
+    Texture2D poopTexture = LoadTexture("resources/poop.png"); // load texture
 
     //texture
-    //poop.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = poopTexture;
+    poop.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = poopTexture;
 
     Vector3 positions[MAX_ENTITIES];
     bool isActive[MAX_ENTITIES] = { false };
@@ -123,7 +123,7 @@ int main(void)
         
         for (int i = 0; i < entityCount; i++) {
             if (isActive[i]) {
-                DrawModel(poop, positions[i], 2.0f, WHITE);
+                DrawModel(poop, positions[i], 1.0f, WHITE);
             }
         }
 
@@ -143,7 +143,7 @@ int main(void)
     }
 
     UnloadFont(comicFont);
-    //UnloadTexture(poopTexture);
+    UnloadTexture(poopTexture);
     CloseWindow();
 
     return 0;

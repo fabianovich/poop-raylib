@@ -1,5 +1,5 @@
 ﻿#include "raylib.h"
-#include "raymath.h"
+#include <stdio.h>
 
 const int MAX_ENTITIES = 420;
 const float GRAVITY = 0.5f;
@@ -13,8 +13,6 @@ int main(void)
 
     Font comicFont = LoadFont("resources/comic.ttf");
 
-    Ray ray = { 0 };
-
     Model poop = LoadModel("resources/og_poop.glb");
 
     Vector3 positions[MAX_ENTITIES];
@@ -27,10 +25,11 @@ int main(void)
     const int poopHeight = (screenHeight / 2) - 125;
 
     const char* poopText = "poop";
-    const char* pToPoop = "PRESS P TO POOP";
+    const char* pToPoop = "press p to poop";
 
     Vector2 poopTextPosition = { poopWidth, poopHeight };
     Vector2 pToPoopPosition = { 75, 75 };
+    Vector2 poopCountPos = { 1375, 75 };
     float fontSize = 200.0f;
     float spacing = 2.0f;
     Color tint = GREEN;
@@ -114,6 +113,7 @@ int main(void)
             }
         }
 
+
         DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, BROWN);
         DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, BLACK);
 
@@ -123,6 +123,9 @@ int main(void)
         
         DrawTextEx(comicFont, poopText, poopTextPosition, fontSize, spacing, tint);
         DrawTextEx(comicFont, pToPoop, pToPoopPosition, 60, spacing, BLACK);
+        char poopCount[32];
+        sprintf_s(poopCount, "poop count: %d/420", entityCount);
+        DrawTextEx(comicFont, poopCount, poopCountPos, 60, spacing, BLACK);
 
         EndDrawing();
     }

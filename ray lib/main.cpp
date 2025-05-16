@@ -1,7 +1,5 @@
 ﻿#include "raylib.h"
 #include "raymath.h"
-#include <string>
-using namespace std;
 
 const int MAX_ENTITIES = 420;
 const float GRAVITY = 0.5f;
@@ -63,9 +61,11 @@ int main(void)
         //gravity
         for (int i = 0; i < entityCount; i++) {
             if (isActive[i]) {
-                positions[i].y -= GRAVITY;
-                if (positions[i].y < 1.0f) {
+                if (positions[i].y == 1.0f) {
                     positions[i].y = 1.0f;
+                }
+                else {
+                    positions[i].y -= GRAVITY;
                 }
             }
         }

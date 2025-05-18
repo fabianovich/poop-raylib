@@ -42,7 +42,7 @@ jobs:
             -s WASM=1 -O3
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@d7f2c0e
+        uses: actions/upload-artifact@v3
         with:
           name: wasm-build
           path: build/

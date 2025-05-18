@@ -1,4 +1,4 @@
-name: Build raylib WebAssembly
+name: poop build wasm
 
 on:
   push:
@@ -42,7 +42,7 @@ jobs:
             -s WASM=1 -O3
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@d7f2c0e
         with:
           name: wasm-build
           path: build/

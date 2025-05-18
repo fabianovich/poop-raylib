@@ -19,8 +19,6 @@ int main(void)
     bool isActive[MAX_ENTITIES] = { false };
     int entityCount = 0;
 
-    Vector3 poopPos = { 0.0f, 0.0f, 0.0f };
-
     const int poopWidth = (screenWidth / 2) - 175;
     const int poopHeight = (screenHeight / 2) - 125;
 
@@ -124,7 +122,7 @@ int main(void)
         DrawTextEx(comicFont, poopText, poopTextPosition, fontSize, spacing, tint);
         DrawTextEx(comicFont, pToPoop, pToPoopPosition, 60, spacing, BLACK);
         char poopCount[32];
-        sprintf_s(poopCount, "poop count: %d/420", entityCount);
+        snprintf(poopCount, sizeof(poopCount), "poop count: %d/420", entityCount);
         DrawTextEx(comicFont, poopCount, poopCountPos, 60, spacing, BLACK);
 
         EndDrawing();

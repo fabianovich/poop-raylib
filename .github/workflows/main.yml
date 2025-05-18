@@ -36,7 +36,7 @@ jobs:
       - name: Build project to wasm
         run: |
           source emsdk/emsdk_env.sh
-          emcc src/main.cpp -o build/index.html \
+          emcc "ray lib"/main.cpp -o build/index.html \
             -I raylib/src -L raylib/build/src -lraylib \
             -s USE_WEBGL2=1 -s FULL_ES3=1 -s ALLOW_MEMORY_GROWTH=1 \
             -s WASM=1 -O3

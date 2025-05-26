@@ -22,9 +22,14 @@ int main(void)
     const int poopWidth = (screenWidth / 2) - 175;
     const int poopHeight = (screenHeight / 2) - 125;
 
+    const int constipatedWidth = (screenWidth / 2) - 310;
+    const int constipatedHeight = (screenHeight / 2) - 58;
+
     const char* poopText = "poop";
     const char* pToPoop = "press p to poop";
-
+    const char* constipatedText = "CONSTIPATED!!!!";
+    
+    Vector2 constipatedTextPos = { constipatedWidth, constipatedHeight };
     Vector2 poopTextPosition = { poopWidth, poopHeight };
     Vector2 pToPoopPosition = { 75, 75 };
     Vector2 poopCountPos = { 1375, 75 };
@@ -119,11 +124,17 @@ int main(void)
 
         EndMode3D();
         
-        DrawTextEx(comicFont, poopText, poopTextPosition, fontSize, spacing, tint);
         DrawTextEx(comicFont, pToPoop, pToPoopPosition, 60, spacing, BLACK);
         char poopCount[32];
         snprintf(poopCount, sizeof(poopCount), "poop count: %d/420", entityCount);
         DrawTextEx(comicFont, poopCount, poopCountPos, 60, spacing, BLACK);
+        if (entityCount == 420) {
+            DrawTextEx(comicFont, constipatedText, constipatedTextPos, 100, spacing, BLACK);
+        }
+        if (entityCount < 420) {
+
+            DrawTextEx(comicFont, poopText, poopTextPosition, fontSize, spacing, tint);
+        }
 
         EndDrawing();
     }

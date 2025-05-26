@@ -52,7 +52,7 @@ int main(void)
 
     while (!WindowShouldClose())
     {
-        if (IsKeyPressed(KEY_P) || IsKeyPressed(KEY_SPACE) && entityCount < MAX_ENTITIES) {
+        if ((IsKeyPressed(KEY_P) || IsKeyPressed(KEY_SPACE)) && entityCount < MAX_ENTITIES) {
             positions[entityCount] = cubePosition;
             positions[entityCount].y -= 1.0f;
             isActive[entityCount] = true;

@@ -4,10 +4,21 @@
 const int MAX_ENTITIES = 420;
 const float GRAVITY = 0.5f;
 
+const int screenWidth = 1920;
+const int screenHeight = 1080;
+
+const int poopWidth = (screenWidth / 2) - 175;
+const int poopHeight = (screenHeight / 2) - 125;
+
+const int constipatedWidth = (screenWidth / 2) - 310;
+const int constipatedHeight = (screenHeight / 2) - 58;
+
+const char* poopText = "poop";
+const char* pToPoop = "press p to poop";
+const char* constipatedText = "CONSTIPATED!!!!";
+
 int main(void)
 {
-    const int screenWidth = 1920;
-    const int screenHeight = 1080;
     ToggleFullscreen();
     InitWindow(screenWidth, screenHeight, "eat shit");
 
@@ -18,16 +29,6 @@ int main(void)
     Vector3 positions[MAX_ENTITIES];
     bool isActive[MAX_ENTITIES] = { false };
     int entityCount = 0;
-
-    const int poopWidth = (screenWidth / 2) - 175;
-    const int poopHeight = (screenHeight / 2) - 125;
-
-    const int constipatedWidth = (screenWidth / 2) - 310;
-    const int constipatedHeight = (screenHeight / 2) - 58;
-
-    const char* poopText = "poop";
-    const char* pToPoop = "press p to poop";
-    const char* constipatedText = "CONSTIPATED!!!!";
     
     Vector2 constipatedTextPos = { constipatedWidth, constipatedHeight };
     Vector2 poopTextPosition = { poopWidth, poopHeight };
